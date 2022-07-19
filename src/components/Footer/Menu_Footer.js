@@ -4,9 +4,20 @@ import { Icon } from '@iconify/react';
 import apple from '../../assets/apple.png';
 import google from '../../assets/google.png';
 import spotify from '../../assets/spotify.png';
-
+import { useEffect } from 'react';
+import {Skeleton} from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadMenusAsync } from '../../redux/reducers/menus/menus.thunks';
 
 export default function MenuFooter() {
+    const dispatch = useDispatch();
+    const { isLoading, menus, errorMessage } = useSelector((state) => state.menus);
+    useEffect(
+        () => {
+            dispatch(loadMenusAsync());
+        }, []
+    );
+
     return (
         <div className="row mb-5">
             <div className="col-12 col-md-4 p-2">
@@ -30,10 +41,9 @@ export default function MenuFooter() {
                         </Typography>
                         <Typography sx={{ mt: 3, color: "#999999" }} variant="p" component="div" gutterBottom>
                             <ul className="footer_menu">
-                                <li>About</li>
-                                <li>Episode</li>
-                                <li>Blog</li>
-                                <li>Contact</li>
+                            {isLoading && <Skeleton />}
+                    {errorMessage && <h3>{errorMessage}</h3>}
+                    {menus && menus.map((menu) =><li key={menu.id}>{menu.title}</li>)}
                             </ul>
                         </Typography>
 

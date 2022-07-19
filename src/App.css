@@ -171,7 +171,7 @@
 {
 margin: auto;
 }
-.single-blog p
+.single-blog .cardhead
 {
   font-size: 8px;
 }
@@ -257,8 +257,10 @@ margin: auto;
 .gallery img 
 {
   width: 100%;
-  max-height: 449px;
+  max-height: 258px;
+  min-height: 258px;
   object-fit: cover;
+  background-color: black;
 }
 
 .gallery div
@@ -306,6 +308,11 @@ margin: auto;
 {
   margin: 10px 0 ;
   
+}
+.validation
+{
+  position: absolute;
+  margin: 42px;
 }
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

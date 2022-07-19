@@ -1,5 +1,5 @@
 import Typography from '@mui/material/Typography';
-
+import Form from './Form';
 
 
 
@@ -21,9 +21,7 @@ export default function NewsLetter() {
                 <div className="col-sm-12 text-center mx-auto">
                     <div className="mt-3 mb-5">
                         <form className="form  d-flex">
-                            <input type="text" className="form-control" placeholder="Type Your Email">
-                            </input>
-                            <button type="submit" className="btn primary-btn"> Subscribe </button>
+                           <Form/>
                         </form>
                     </div>
                 </div>

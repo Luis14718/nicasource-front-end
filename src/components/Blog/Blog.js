@@ -1,7 +1,10 @@
 
-import { Container, Typography, Box } from '@mui/material';
+import { Container, Typography, Box, Skeleton } from '@mui/material';
 import { Icon } from '@iconify/react';
-
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadBlogsAsync } from '../../redux/reducers/blogs/blogs.thunks';
+import parse from 'html-react-parser';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
@@ -25,10 +28,16 @@ const responsive = {
 
 
 /// Single post to use with 'for'  to an array of elent 
-function SingleBlog({ content }) {
+function SingleBlog({ ...blog }) {
+
+    function htmlgenerate(html) {
+        return parse(decodeURIComponent(html.replace(/\+/g, ' ')));
+    }
+
+
     return (
-        <Box className="single-blog">
-            <div className="layout">
+        <Box className="single-blog" id={blog.id} key={blog.id}>
+            <div className="layout" id={blog.id} key={blog.id}>
                 <div className="row ">
                     <div className="col-12 top-blog">
                         <div className="row">
@@ -37,7 +46,7 @@ function SingleBlog({ content }) {
                                     By Mehedi Hasan
                                 </Typography>
                                 <Typography variant="span" sx={{ color: "#ACACAC", fontSize: '14px' }} component="div" gutterBottom>
-                                    By Mehedi Hasan
+                                    Nicasource Radio
                                 </Typography>
                             </div>
                             <div className="col-6">
@@ -51,14 +60,14 @@ function SingleBlog({ content }) {
                 <div className="row p-4">
                     <div className="col-12">
                         <Typography variant="h6" component="div" gutterBottom>
-                            Global News Podcast Thai soldier kills many {content}
+                            {htmlgenerate(blog.title.rendered)}
                         </Typography>
                     </div>
                 </div>
                 <div className="row p-4">
                     <div className="col-12">
                         <Typography variant="p" component="div" gutterBottom>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore {content}
+                        {htmlgenerate(blog.content.rendered)}
                         </Typography>
                     </div>
                 </div>
@@ -70,12 +79,20 @@ const CustomRightArrow = ({ onClick, ...rest }) => {
     return <button className="arrow-right" onClick={() => onClick()} ><Icon icon="akar-icons:arrow-right" /></button>;
 };
 const CustomLeftArrow = ({ onClick, ...rest }) => {
-    return <button  className="arrow-left" onClick={() => onClick()} ><Icon icon="akar-icons:arrow-left" /></button>;
+    return <button className="arrow-left" onClick={() => onClick()} ><Icon icon="akar-icons:arrow-left" /></button>;
 };
+
+
 
 export default function Blog() {
 
-
+    const dispatch = useDispatch();
+    const { isLoading, blogs, errorMessage } = useSelector((state) => state.blogs);
+    useEffect(
+        () => {
+            dispatch(loadBlogsAsync());
+        }, []
+    );
     return (
         <Container sx={{ mt: 5 }}>
             <div className="row">
@@ -102,12 +119,9 @@ export default function Blog() {
                     removeArrowOnDeviceType={["tablet", "mobile"]}
                     itemClass=""
                 >
-                    <div> <SingleBlog content={'1'} /></div>
-                    <div ><SingleBlog content={'2'} /></div>
-                    <div ><SingleBlog content={'3'} /></div>
-                    <div ><SingleBlog content={'4'} /></div>
-                    <div ><SingleBlog content={'5'} /></div>
-
+                    {isLoading && <Skeleton/>}
+                    {errorMessage && <h3>{errorMessage}</h3>}
+                    {blogs && blogs.map((blogs) => <div key={blogs.id}> <SingleBlog  {...blogs} /></div>)}
                 </Carousel>
             </div>
             <div className="row">
