@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# Getting Started with  Nica Source React Front end 
+
+
+this app I used Funcitonal components and class component but mostly functional components due to the limit time of the assesment working with functional components is faster in my case.
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
