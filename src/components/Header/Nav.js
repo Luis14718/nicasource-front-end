@@ -30,7 +30,7 @@ export default function Navigation() {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto align-items-center navmenu">
-                    <Nav.Link className="item-menu active">Home</Nav.Link>
+                    <Nav.Link key="home" className="item-menu active">Home</Nav.Link>
                     {isLoading && <Skeleton />}
                     {errorMessage && <h3>{errorMessage}</h3>}
                     {menus && menus.map((menu) =><Nav.Link key={menu.id} className="item-menu">{menu.title}</Nav.Link>)}

@@ -63,7 +63,7 @@ export default function Gallery() {
                 {errorMessage && <h3>{errorMessage}</h3>}
                 {pages && pages.acf.photo_gallery.gallery[0].map((images) => {
                     return (
-                        <div className="col-lg-4 col-md-12 mb-4 mb-lg-0">
+                        <div key={images.id} className="col-lg-4 col-md-12 mb-4 mb-lg-0">
                             <div className="hovereffect">
                                 <button onClick={() => { showimage(images.full_image_url) }}>
                                     <img src={images.full_image_url} className="w-100" alt="tree sunset" />
